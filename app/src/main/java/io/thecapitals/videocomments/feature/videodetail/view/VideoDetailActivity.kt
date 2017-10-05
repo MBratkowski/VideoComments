@@ -1,14 +1,13 @@
 package io.thecapitals.videocomments.feature.videodetail.view
 
-import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
+import com.google.android.exoplayer2.source.LoopingMediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
@@ -37,7 +36,9 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
         super.onCreate(savedInstanceState)
         binding.player.player = createPlayer()
         binding.addComment.setOnClickListener({
-            startActivity(Intent(this, NewCommentActivity::class.java))
+            NewCommentActivity.start(
+                    this, "Some title",
+                    binding.player.player.currentPosition)
         })
     }
 
@@ -54,6 +55,11 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
                         "/2017/10/04/1860100783/1507132502800/asset_1200K.mp4"))
     }
 
+    override fun onStop() {
+        releasePlayer(binding.player.player)
+        super.onStop()
+    }
+
     fun createPlayer(): SimpleExoPlayer? {
         val bandwidthMeter = DefaultBandwidthMeter()
         val factory = AdaptiveTrackSelection.Factory(bandwidthMeter)
@@ -67,6 +73,12 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
                 Util.getUserAgent(this, "VideoComments"), bandwidthMeter)
         val extractorsFactory = DefaultExtractorsFactory()
         val videoSource = ExtractorMediaSource(sourceUrl, dataSourceFactory, extractorsFactory, null, null)
-        player.prepare(videoSource)
+        val loopingMediaSource = LoopingMediaSource(videoSource)
+        player.playWhenReady = true
+        player.prepare(loopingMediaSource)
+    }
+
+    fun releasePlayer(player: SimpleExoPlayer?) {
+        player ?: player!!.release()
     }
 }
