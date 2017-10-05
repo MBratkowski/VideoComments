@@ -8,21 +8,16 @@ rootProject.applicationModulePlugins.each {
 
 android {
     def ext = rootProject.extensions.ext
-
     compileSdkVersion ext.android.compileSdkVersion
     buildToolsVersion ext.android.buildToolsVersion
     defaultConfig {
         vectorDrawables.useSupportLibrary = true
-        applicationId "io.thecapitals.videocomments"
+        applicationId 'nl.thecapitals.videocomments'
         minSdkVersion ext.android.minSdkVersion
         targetSdkVersion ext.android.targetSdkVersion
-
-        versionCode gitVersionCode
         versionName gitVersionName
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-
     dataBinding {
         enabled = true
     }
@@ -37,9 +32,10 @@ android {
             shrinkResources false
         }
     }
-
     kapt {
         generateStubs = true
+    }
+    productFlavors {
     }
 }
 
@@ -47,8 +43,9 @@ dependencies {
     rootProject.applicationModuleDependencies.each {
         add(it.configuration, it.dependency, it.options)
     }
+    implementation 'com.google.firebase:firebase-core:11.4.2'
 }
-
+apply plugin: 'com.google.gms.google-services'
 
 
 

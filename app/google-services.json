@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "417943708791",
+    "firebase_url": "https://videocomments-b08ef.firebaseio.com",
+    "project_id": "videocomments-b08ef",
+    "storage_bucket": "videocomments-b08ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417943708791:android:54eb54cbf5f61c9a",
+        "android_client_info": {
+          "package_name": "nl.thecapitals.videocomments"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417943708791-cco65cb4ipqvk3mqgp8g0t46ru2lpuv1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyNslmLqe6eyP2cQVMnpWDleSwA1m6Thk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
