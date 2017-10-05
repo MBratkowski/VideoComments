@@ -8,7 +8,7 @@ ext {
     ]
     build = [
             gradle      : "3.0.0-beta7",
-            kotlin      : "1.1.50",
+            kotlin      : "1.1.51",
             playServices: "3.1.0"
     ]
 
@@ -29,6 +29,7 @@ ext {
     def versionJavax = '1'
     def versionFirebase = '11.2.0'
     def versionPresistence = '1.0.0-alpha9'
+    def versionExoPlayer = "r2.5.3"
 
     def libs = [
             appCompat          : [group: 'com.android.support', name: 'appcompat-v7', version: androidSupportLibs],
@@ -46,7 +47,8 @@ ext {
             persistence        : [group: 'android.arch.persistence.room', name: 'runtime', version: versionPresistence],
             persistenceRx      : [group: 'android.arch.persistence.room', name: 'rxjava2', version: versionPresistence],
             persistenceCompiler: [group: 'android.arch.persistence.room', name: 'compiler', version: versionPresistence],
-            firebase           : [group: 'com.google.firebase', name: 'firebase-database', version: versionFirebase]
+            firebase           : [group: 'com.google.firebase', name: 'firebase-database', version: versionFirebase],
+            exoPlayer          : [group: 'com.google.android.exoplayer', name: 'exoplayer', version: versionExoPlayer]
     ]
 
     def testLibs = [
@@ -69,7 +71,8 @@ ext {
             [configuration: "kapt", dependency: libs.dataBindingCompiler],
             [configuration: "testImplementation", dependency: testLibs.junit],
             [configuration: "androidTestImplementation", dependency: testLibs.espresso,
-             options      : supportAnnotationsExclude]
+             options      : supportAnnotationsExclude],
+            [configuration: "implementation", dependency: libs.exoPlayer]
 
     ]
 
