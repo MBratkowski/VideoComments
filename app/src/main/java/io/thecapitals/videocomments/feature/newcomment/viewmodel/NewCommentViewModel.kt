@@ -1,14 +1,14 @@
-package io.thecapitals.videocomments.feature.main.viewmodel
+package io.thecapitals.videocomments.feature.newcomment.viewmodel
 
 import android.arch.lifecycle.ViewModel
-import io.thecapitals.videocomments.feature.main.data.BaseUseCase
-import io.thecapitals.videocomments.feature.main.data.PostCommentUseCase
-import io.thecapitals.videocomments.feature.main.model.MessageModel
+import io.thecapitals.videocomments.feature.core.data.BaseUseCase
+import io.thecapitals.videocomments.feature.newcomment.data.PostCommentUseCase
+import io.thecapitals.videocomments.data.model.MessageModel
 
 /**
  * Created for project VideoComments on 05/10/2017.
  */
-class MainViewModel : ViewModel() {
+class NewCommentViewModel : ViewModel() {
 
     lateinit var useCase: PostCommentUseCase
 

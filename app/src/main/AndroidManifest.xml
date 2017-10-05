@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.thecapitals.videocomments">
+<manifest package="io.thecapitals.videocomments"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:name=".application.VideoCommentsApplication"
@@ -10,13 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".feature.main.view.MainActivity">
+        <activity android:name=".feature.videodetail.view.VideoDetailActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".feature.newcomment.view.NewCommentActivity"/>
     </application>
 
 </manifest>

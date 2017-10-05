@@ -1,8 +1,9 @@
-package io.thecapitals.videocomments.feature.main.data
+package io.thecapitals.videocomments.feature.newcomment.data
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
-import io.thecapitals.videocomments.feature.main.model.MessageModel
+import io.thecapitals.videocomments.feature.core.data.BaseUseCase
+import io.thecapitals.videocomments.data.model.MessageModel
 
 /**
  * Created for project VideoComments on 05/10/2017.

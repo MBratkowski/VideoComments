@@ -1,4 +1,4 @@
-package io.thecapitals.videocomments
+package io.thecapitals.videocomments.data.source
 
 import com.google.firebase.firestore.FirebaseFirestore
 
