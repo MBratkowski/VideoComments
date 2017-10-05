@@ -51,6 +51,7 @@ ext {
             persistenceCompiler  : [group: 'android.arch.persistence.room', name: 'compiler', version: versionPresistence],
             firebase             : [group: 'com.google.firebase', name: 'firebase-database', version: versionFirebase],
             exoPlayer            : [group: 'com.google.android.exoplayer', name: 'exoplayer', version: versionExoPlayer],
+            exoPlayerDash        : [group: 'com.google.android.exoplayer', name: 'exoplayer-dash', version: versionExoPlayer],
             architectureComponent: [group: 'android.arch.lifecycle', name: 'runtime', version: versionArchitectureComponent],
             architectureLifecycle: [group: 'android.arch.lifecycle', name: 'extensions', version: versionLifecycleCompiler],
             architectureCompiler : [group: 'android.arch.lifecycle', name: 'compiler', version: versionLifecycleCompiler]
@@ -79,6 +80,7 @@ ext {
             [configuration: "androidTestImplementation", dependency: testLibs.espresso,
              options      : supportAnnotationsExclude],
             [configuration: "implementation", dependency: libs.exoPlayer],
+            [configuration: "implementation", dependency: libs.exoPlayerDash],
             [configuration: "implementation", dependency: libs.architectureComponent],
             [configuration: "implementation", dependency: libs.architectureLifecycle],
             [configuration: "kapt", dependency: libs.architectureCompiler]
