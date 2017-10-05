@@ -31,10 +31,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.buttonSend.setOnClickListener({
-            viewModel.execute(MessageModel(binding.userNameEditText.text.toString(),
-                    binding.messageEditText.text.toString()))
-        })
+        setupButtons()
         binding.player.player = createPlayer()
     }
 
@@ -65,5 +62,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         val extractorsFactory = DefaultExtractorsFactory()
         val videoSource = ExtractorMediaSource(sourceUrl, dataSourceFactory, extractorsFactory, null, null)
         player.prepare(videoSource)
+    }
+
+    private fun setupButtons() {
+        binding.buttonVideoActivity.setOnClickListener({
+            VideoListActivity.startActivity(this)
+        })
+        binding.buttonSend.setOnClickListener({
+            viewModel.execute(MessageModel(binding.userNameEditText.text.toString(),
+                    binding.messageEditText.text.toString()))
+        })
     }
 }
