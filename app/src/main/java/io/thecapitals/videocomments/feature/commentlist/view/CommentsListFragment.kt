@@ -13,11 +13,12 @@ import io.thecapitals.videocomments.databinding.FragmentCommentsListBinding
 import io.thecapitals.videocomments.feature.commentlist.data.CommentsListUseCase
 import io.thecapitals.videocomments.feature.commentlist.view.adapter.CommentsListAdapter
 import io.thecapitals.videocomments.feature.commentlist.viewmodel.CommentsListViewModel
+import io.thecapitals.videocomments.feature.videodetail.callback.VideoProgressCallback
 
 /**
  * Created for project VideoComments on 05/10/2017.
  */
-class CommentsListFragment : Fragment(), LifecycleOwner {
+class CommentsListFragment : Fragment(), LifecycleOwner, VideoProgressCallback {
 
     lateinit var binding: FragmentCommentsListBinding
 
@@ -49,5 +50,12 @@ class CommentsListFragment : Fragment(), LifecycleOwner {
         binding.commentsList.adapter = adapter
         viewModel.getComments(arguments.getString(ARG_VIDEO_REF, ""))
                 .observe(this, (Observer { t -> adapter.setData(t) }))
+    }
+
+    override fun onProgressUpdated(newProgress: Long) {
+        val nearest = (binding.commentsList.adapter as CommentsListAdapter).nearestPositionFor(newProgress)
+        binding.commentsList.scrollToPosition(
+                if (nearest >= 0) nearest
+                else (binding.commentsList.adapter.itemCount - 1))
     }
 }

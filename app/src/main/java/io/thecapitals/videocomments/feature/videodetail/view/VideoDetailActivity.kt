@@ -6,12 +6,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.LoopingMediaSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
+import com.google.android.exoplayer2.ui.PlaybackControlView
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
@@ -24,11 +26,12 @@ import io.thecapitals.videocomments.feature.core.view.BaseActivity
 import io.thecapitals.videocomments.feature.newcomment.data.PostCommentUseCase
 import io.thecapitals.videocomments.feature.newcomment.view.NewCommentActivity
 import io.thecapitals.videocomments.feature.newcomment.viewmodel.NewCommentViewModel
+import io.thecapitals.videocomments.feature.videodetail.callback.VideoProgressCallback
 
 
 class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentViewModel>() {
 
-    lateinit var video: VideoModel;
+    lateinit var video: VideoModel
 
     companion object {
         const val ARG_VIDEO = "arg_video"
@@ -77,6 +80,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
         startStream(
                 binding.player.player,
                 Uri.parse(video.videoUrl))
+        binding.player.setControlDispatcher(makeControlDispatcher())
     }
 
     override fun onPause() {
@@ -109,5 +113,26 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
 
     fun releasePlayer(player: SimpleExoPlayer?) {
         player ?: player!!.release()
+    }
+
+    private fun makeControlDispatcher(): PlaybackControlView.ControlDispatcher {
+        return object : PlaybackControlView.ControlDispatcher {
+            override fun dispatchSetPlayWhenReady(player: Player, playWhenReady: Boolean): Boolean {
+                return playWhenReady
+            }
+
+            override fun dispatchSeekTo(player: Player, windowIndex: Int, positionMs: Long): Boolean {
+                val attachedFragment = supportFragmentManager.findFragmentById(R.id.video_comments_container)
+                if (attachedFragment is VideoProgressCallback) {
+                    (attachedFragment as VideoProgressCallback).onProgressUpdated(positionMs)
+                }
+                player.seekTo(positionMs)
+                return true
+            }
+
+            override fun dispatchSetRepeatMode(player: Player, repeatMode: Int): Boolean {
+                return false
+            }
+        }
     }
 }
