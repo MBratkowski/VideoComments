@@ -3,7 +3,6 @@ package io.thecapitals.videocomments.feature.commentlist.view.adapter.item
 
 import android.text.format.DateUtils
 import io.thecapitals.videocomments.data.model.CommentModel
-import io.thecapitals.videocomments.feature.commentlist.view.adapter.collection.CommentViewItemData
 import java.text.SimpleDateFormat
 import java.util.*
 
