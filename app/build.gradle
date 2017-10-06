@@ -45,6 +45,7 @@ dependencies {
     }
     implementation 'com.google.firebase:firebase-core:11.4.2'
     implementation 'com.google.firebase:firebase-firestore:11.4.2'
+    implementation 'com.google.firebase:firebase-auth:11.4.2'
 }
 apply plugin: 'com.google.gms.google-services'
 
