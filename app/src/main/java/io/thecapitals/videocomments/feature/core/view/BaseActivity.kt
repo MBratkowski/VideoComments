@@ -1,4 +1,4 @@
-package io.thecapitals.videocomments.feature.main.view
+package io.thecapitals.videocomments.feature.core.view
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.ViewModel

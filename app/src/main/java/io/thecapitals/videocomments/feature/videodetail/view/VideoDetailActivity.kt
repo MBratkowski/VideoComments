@@ -1,6 +1,7 @@
-package io.thecapitals.videocomments.feature.main.view
+package io.thecapitals.videocomments.feature.videodetail.view
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -12,27 +13,32 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import io.thecapitals.videocomments.FirestoreProvider
 import io.thecapitals.videocomments.R
-import io.thecapitals.videocomments.databinding.ActivityMainBinding
-import io.thecapitals.videocomments.feature.main.data.PostCommentUseCase
-import io.thecapitals.videocomments.feature.main.model.MessageModel
-import io.thecapitals.videocomments.feature.main.viewmodel.MainViewModel
+import io.thecapitals.videocomments.data.model.MessageModel
+import io.thecapitals.videocomments.data.source.FirestoreProvider
+import io.thecapitals.videocomments.feature.core.view.BaseActivity
+import io.thecapitals.videocomments.feature.main.view.VideoListActivity
+import io.thecapitals.videocomments.feature.newcomment.data.PostCommentUseCase
+import io.thecapitals.videocomments.feature.newcomment.view.NewCommentActivity
+import io.thecapitals.videocomments.feature.newcomment.viewmodel.NewCommentViewModel
+import kotlinx.android.synthetic.main.activity_video_detail.view.*
 
 
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
+class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentViewModel>() {
+
     override fun prepareUseCase() {
         viewModel.applyUseCase(PostCommentUseCase(FirestoreProvider.dataBase))
     }
 
-    override fun prepareViewModel(): MainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+    override fun prepareViewModel(): NewCommentViewModel = ViewModelProviders.of(this).get(NewCommentViewModel::class.java)
 
-    override fun getLayoutRes(): Int = R.layout.activity_main
+    override fun getLayoutRes(): Int = R.layout.activity_video_detail
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupButtons()
         binding.player.player = createPlayer()
+
     }
 
     override fun onStart() {
@@ -72,5 +78,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             viewModel.execute(MessageModel(binding.userNameEditText.text.toString(),
                     binding.messageEditText.text.toString()))
         })
+
+        binding.addComment.setOnClickListener({
+            startActivity(Intent(this, NewCommentActivity::class.java))
+        })
+
     }
 }

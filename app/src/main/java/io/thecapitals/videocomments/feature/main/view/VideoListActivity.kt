@@ -6,9 +6,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import io.thecapitals.videocomments.FirestoreProvider
 import io.thecapitals.videocomments.R
+import io.thecapitals.videocomments.data.source.FirestoreProvider
 import io.thecapitals.videocomments.databinding.ActivityVideoListBinding
+import io.thecapitals.videocomments.feature.core.view.BaseActivity
 import io.thecapitals.videocomments.feature.main.adapter.VideoAdapter
 import io.thecapitals.videocomments.feature.main.data.GetVideoListUseCase
 import io.thecapitals.videocomments.feature.main.viewmodel.VideoListViewModel
