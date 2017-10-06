@@ -49,7 +49,7 @@ class NewCommentActivity : BaseActivity<ActivityNewCommentBinding, NewCommentVie
                     MessageModel(
                             binding.userNameEditText.text.toString(),
                             binding.messageEditText.text.toString(),
-                            intent.getLongExtra(ARG_CURRENT_POS, 0L)))
+                            intent.getLongExtra(ARG_CURRENT_POS, 0L), Calendar.getInstance().time))
             finish()
         })
 
