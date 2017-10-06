@@ -16,6 +16,7 @@ import com.google.android.exoplayer2.util.Util
 import io.thecapitals.videocomments.R
 import io.thecapitals.videocomments.data.source.FirestoreProvider
 import io.thecapitals.videocomments.databinding.ActivityVideoDetailBinding
+import io.thecapitals.videocomments.feature.commentlist.view.CommentsListFragment
 import io.thecapitals.videocomments.feature.core.view.BaseActivity
 import io.thecapitals.videocomments.feature.newcomment.data.PostCommentUseCase
 import io.thecapitals.videocomments.feature.newcomment.view.NewCommentActivity
@@ -37,9 +38,16 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
         binding.player.player = createPlayer()
         binding.addComment.setOnClickListener({
             NewCommentActivity.start(
-                    this, "Some title",
+                    this, "dummyVideoId", "Some title",
                     binding.player.player.currentPosition)
         })
+
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.video_comments_container, CommentsListFragment())
+                    .commit()
+        }
     }
 
     override fun onStart() {
@@ -53,6 +61,11 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
                 binding.player.player,
                 Uri.parse("http://mediadownloads.mlb.com/mlbam/mp4" +
                         "/2017/10/04/1860100783/1507132502800/asset_1200K.mp4"))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.player.player.playWhenReady = false
     }
 
     override fun onStop() {
