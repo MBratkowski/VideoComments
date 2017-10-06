@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="comment"
+            type="io.thecapitals.videocomments.feature.commentlist.view.adapter.item.CommentItemBindingModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dip"
+            android:text="@{comment.anchorTime}"
+            android:textColor="#bc0d10"
+            android:textStyle="bold"
+            tools:text="01:05"/>
+
+        <ImageView
+            android:layout_width="65dip"
+            android:layout_height="65dip"
+            android:layout_margin="10dip"
+            android:padding="5dip"
+            app:srcCompat="@android:drawable/ic_menu_camera"/>
+
+        <TextView
+            android:id="@+id/comment_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="15dip"
+            android:layout_toStartOf="@id/comment_date_posted"
+            android:gravity="start|center_vertical"
+            android:text="@{comment.userName}"
+            android:textColor="#262626"
+            android:textStyle="bold"
+            tools:text="TacocaT"/>
+
+        <TextView
+            android:id="@+id/comment_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/comment_name"
+            android:layout_marginStart="80dp"
+            android:layout_toStartOf="@id/comment_date_posted"
+            android:gravity="start"
+            android:text="@{comment.commentBody}"
+            android:textColor="#474747"
+            tools:text="Pancake."/>
+
+        <TextView
+            android:id="@+id/comment_date_posted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dip"
+            android:gravity="end"
+            android:text="@{comment.postTime}"
+            android:textColor="#a5a5a5"
+            android:textStyle="italic"
+            tools:text="01/03/2017"/>
+    </RelativeLayout>
+</layout>
