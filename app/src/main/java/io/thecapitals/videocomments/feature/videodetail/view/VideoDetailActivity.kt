@@ -1,6 +1,8 @@
 package io.thecapitals.videocomments.feature.videodetail.view
 
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import com.google.android.exoplayer2.ExoPlayerFactory
@@ -14,6 +16,7 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import io.thecapitals.videocomments.R
+import io.thecapitals.videocomments.data.model.VideoModel
 import io.thecapitals.videocomments.data.source.FirestoreProvider
 import io.thecapitals.videocomments.databinding.ActivityVideoDetailBinding
 import io.thecapitals.videocomments.feature.commentlist.view.CommentsListFragment
@@ -25,6 +28,18 @@ import io.thecapitals.videocomments.feature.newcomment.viewmodel.NewCommentViewM
 
 class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentViewModel>() {
 
+    lateinit var video: VideoModel;
+
+    companion object {
+        const val ARG_VIDEO = "arg_video"
+
+        fun start(context: Context, video: VideoModel) {
+            val intent = Intent(context, VideoDetailActivity::class.java)
+            intent.putExtra(ARG_VIDEO, video)
+            context.startActivity(intent)
+        }
+    }
+
     override fun prepareUseCase() {
         viewModel.applyUseCase(PostCommentUseCase(FirestoreProvider.dataBase))
     }
@@ -35,17 +50,19 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        video = intent.getParcelableExtra<VideoModel>(ARG_VIDEO)
+        title = video.videoName
         binding.player.player = createPlayer()
         binding.addComment.setOnClickListener({
             NewCommentActivity.start(
-                    this, "dummyVideoId", "Some title",
+                    this, video.videoId, video.videoName,
                     binding.player.player.currentPosition)
         })
 
         if (savedInstanceState == null) {
             supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.video_comments_container, CommentsListFragment())
+                    .replace(R.id.video_comments_container, CommentsListFragment.newInstance(video.videoId))
                     .commit()
         }
     }
@@ -59,8 +76,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
         super.onResume()
         startStream(
                 binding.player.player,
-                Uri.parse("http://mediadownloads.mlb.com/mlbam/mp4" +
-                        "/2017/10/04/1860100783/1507132502800/asset_1200K.mp4"))
+                Uri.parse(video.videoUrl))
     }
 
     override fun onPause() {
