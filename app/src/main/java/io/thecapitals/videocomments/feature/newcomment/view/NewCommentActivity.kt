@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.format.DateUtils
 import io.thecapitals.videocomments.R
 import io.thecapitals.videocomments.data.model.CommentModel
 import io.thecapitals.videocomments.data.model.UserModel
@@ -58,7 +59,8 @@ class NewCommentActivity : BaseActivity<ActivityNewCommentBinding, NewCommentVie
 
         })
         title = intent.getStringExtra(ARG_TITLE)
-        binding.newCommentHeader.text = "Add a new comment at $anchor!"
+        val anchorString = DateUtils.formatElapsedTime(anchor / 1000)
+        binding.newCommentHeader.text = "Add a new comment at $anchorString!"
     }
 
     private fun handleErrors(userRef: String, anchor: Long) {

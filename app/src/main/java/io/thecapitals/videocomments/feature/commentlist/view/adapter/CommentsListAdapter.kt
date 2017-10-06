@@ -35,4 +35,8 @@ class CommentsListAdapter : RecyclerView.Adapter<CommentItemViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): CommentItemViewHolder {
         return CommentItemViewHolder(ItemCommentBinding.inflate(LayoutInflater.from(parent!!.context), parent, false))
     }
+
+    fun nearestPositionFor(newProgress: Long): Int {
+        return messages.indexOfFirst { it.anchor > newProgress }
+    }
 }

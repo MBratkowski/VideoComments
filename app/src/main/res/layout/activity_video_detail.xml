@@ -6,51 +6,41 @@
     <data>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-            android:id="@+id/player"
-            android:layout_width="0dip"
-            android:layout_height="0dip"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintDimensionRatio="H,16:9"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <TextView
-            android:id="@+id/video_title"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dip"
-            android:text="Video"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/player"/>
+            android:layout_height="wrap_content">
+
+            <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                android:id="@+id/player"
+                android:layout_width="0dip"
+                android:layout_height="0dip"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintDimensionRatio="H,16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </android.support.constraint.ConstraintLayout>
 
         <Button
             android:id="@+id/add_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:elevation="5dip"
-            android:text="Add comment"
-            app:layout_constraintEnd_toStartOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/video_title"/>
+            android:layout_gravity="end"
+            android:text="Add comment"/>
 
         <FrameLayout
             android:id="@+id/video_comments_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginEnd="5dip"
             android:layout_marginStart="5dip"
-            android:layout_marginTop="15dip"
             app:layout_constraintTop_toBottomOf="@id/add_comment"/>
 
-
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 </layout>
