@@ -14,14 +14,12 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import io.thecapitals.videocomments.R
-import io.thecapitals.videocomments.data.model.MessageModel
 import io.thecapitals.videocomments.data.source.FirestoreProvider
+import io.thecapitals.videocomments.databinding.ActivityVideoDetailBinding
 import io.thecapitals.videocomments.feature.core.view.BaseActivity
-import io.thecapitals.videocomments.feature.main.view.VideoListActivity
 import io.thecapitals.videocomments.feature.newcomment.data.PostCommentUseCase
 import io.thecapitals.videocomments.feature.newcomment.view.NewCommentActivity
 import io.thecapitals.videocomments.feature.newcomment.viewmodel.NewCommentViewModel
-import kotlinx.android.synthetic.main.activity_video_detail.view.*
 
 
 class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentViewModel>() {
@@ -71,14 +69,6 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
     }
 
     private fun setupButtons() {
-        binding.buttonVideoActivity.setOnClickListener({
-            VideoListActivity.startActivity(this)
-        })
-        binding.buttonSend.setOnClickListener({
-            viewModel.execute(MessageModel(binding.userNameEditText.text.toString(),
-                    binding.messageEditText.text.toString()))
-        })
-
         binding.addComment.setOnClickListener({
             startActivity(Intent(this, NewCommentActivity::class.java))
         })
