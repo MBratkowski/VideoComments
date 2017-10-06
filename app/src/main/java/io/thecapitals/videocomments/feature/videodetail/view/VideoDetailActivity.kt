@@ -26,10 +26,13 @@ import io.thecapitals.videocomments.feature.core.view.BaseActivity
 import io.thecapitals.videocomments.feature.newcomment.data.PostCommentUseCase
 import io.thecapitals.videocomments.feature.newcomment.view.NewCommentActivity
 import io.thecapitals.videocomments.feature.newcomment.viewmodel.NewCommentViewModel
+import io.thecapitals.videocomments.feature.videodetail.callback.CommentsPositionsListener
 import io.thecapitals.videocomments.feature.videodetail.callback.VideoProgressCallback
+import io.thecapitals.videocomments.ui.SeekbarCommentIndicators
 
 
-class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentViewModel>() {
+class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentViewModel>(),
+        CommentsPositionsListener {
 
     lateinit var video: VideoModel
 
@@ -91,6 +94,18 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
     override fun onStop() {
         releasePlayer(binding.player.player)
         super.onStop()
+    }
+
+    override fun onCommentsLoaded(positions: List<Long>) {
+        val destination = ArrayList<Int>()
+        val duration = binding.player.player.duration
+        if (duration > 0) {
+            positions.mapTo(destination) {
+                ((it * 100) / duration).toInt()
+            }
+            binding.player.findViewById<SeekbarCommentIndicators>(R.id.seekbar_comment_indicators)
+                    ?.setDots(destination)
+        }
     }
 
     fun createPlayer(): SimpleExoPlayer? {

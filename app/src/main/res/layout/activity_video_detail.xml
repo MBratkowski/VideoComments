@@ -20,11 +20,11 @@
                 android:layout_width="0dip"
                 android:layout_height="0dip"
                 android:layout_marginBottom="8dp"
+                app:controller_layout_id="@layout/view_video_controls"
                 app:layout_constraintDimensionRatio="H,16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-
         </android.support.constraint.ConstraintLayout>
 
         <Button

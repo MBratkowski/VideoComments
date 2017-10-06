@@ -13,6 +13,7 @@ import io.thecapitals.videocomments.databinding.FragmentCommentsListBinding
 import io.thecapitals.videocomments.feature.commentlist.data.CommentsListUseCase
 import io.thecapitals.videocomments.feature.commentlist.view.adapter.CommentsListAdapter
 import io.thecapitals.videocomments.feature.commentlist.viewmodel.CommentsListViewModel
+import io.thecapitals.videocomments.feature.videodetail.callback.CommentsPositionsListener
 import io.thecapitals.videocomments.feature.videodetail.callback.VideoProgressCallback
 
 /**
@@ -49,7 +50,16 @@ class CommentsListFragment : Fragment(), LifecycleOwner, VideoProgressCallback {
         val adapter = CommentsListAdapter()
         binding.commentsList.adapter = adapter
         viewModel.getComments(arguments.getString(ARG_VIDEO_REF, ""))
-                .observe(this, (Observer { t -> adapter.setData(t) }))
+                .observe(this, (Observer { t ->
+                    run {
+                        adapter.setData(t)
+                        if (t != null && activity is CommentsPositionsListener) {
+                            val anchors = ArrayList<Long>()
+                            t.mapTo(anchors, { it.anchor })
+                            (activity as CommentsPositionsListener).onCommentsLoaded(anchors)
+                        }
+                    }
+                }))
     }
 
     override fun onProgressUpdated(newProgress: Long) {
