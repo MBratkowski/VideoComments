@@ -1,5 +1,6 @@
 package io.thecapitals.videocomments.feature.newcomment.view
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -12,7 +13,6 @@ import io.thecapitals.videocomments.databinding.ActivityNewCommentBinding
 import io.thecapitals.videocomments.feature.core.view.BaseActivity
 import io.thecapitals.videocomments.feature.newcomment.data.PostCommentUseCase
 import io.thecapitals.videocomments.feature.newcomment.viewmodel.NewCommentViewModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -45,28 +45,25 @@ class NewCommentActivity : BaseActivity<ActivityNewCommentBinding, NewCommentVie
 
     override fun getLayoutRes(): Int = R.layout.activity_new_comment
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val userId = UUID.randomUUID().toString()
+        val userRef = UUID.randomUUID().toString()
+        val anchor = intent.getLongExtra(ARG_CURRENT_POS, 0L)
         binding.buttonSend.setOnClickListener({
+            val userName = binding.userNameEditText.text.toString()
             viewModel.execute(
-                    UserModel(
-                            userId,
-                            binding.userNameEditText.text.toString()),
+                    UserModel(userRef, userName),
                     CommentModel(
                             intent.getStringExtra(ARG_VIDEO_REF),
-                            userId,
+                            userRef, userName,
                             binding.messageEditText.text.toString(),
-                            intent.getLongExtra(ARG_CURRENT_POS, 0L),
+                            anchor,
                             Calendar.getInstance().time
                     ))
             finish()
         })
-
-        val sdf = SimpleDateFormat("mm:ss", Locale.US)
         title = intent.getStringExtra(ARG_TITLE)
-
-        binding.newCommentHeader.text = String.format("Add a new comment at %s!",
-                sdf.format(intent.getLongExtra(ARG_CURRENT_POS, 0L)))
+        binding.newCommentHeader.text = "Add a new comment at $anchor!"
     }
 }
