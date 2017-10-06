@@ -67,7 +67,7 @@ class NewCommentActivity : BaseActivity<ActivityNewCommentBinding, NewCommentVie
 
 
         if (userName.isEmpty() && message.isEmpty()) {
-            binding.userNameEditText.error = "need a user and a message"
+            binding.userNameEditText.error = "need a user"
             binding.messageEditText.error = "need a message"
             return
         }
