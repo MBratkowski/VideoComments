@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import io.thecapitals.videocomments.data.model.CommentModel
 import io.thecapitals.videocomments.feature.core.data.BaseUseCase
 import java.util.*
@@ -19,6 +20,8 @@ class CommentsListUseCase(
     fun getComments(videoRef: String): LiveData<List<CommentModel>> {
         firebaseFirestore.collection("comments")
                 .whereEqualTo("videoRef", videoRef)
+                .orderBy("anchor", Query.Direction.ASCENDING)
+                .orderBy("timeCreated", Query.Direction.DESCENDING)
                 .addSnapshotListener { value, e ->
                     if (e != null) {
                         Log.d("Usecase", "Could not get data for comments $videoRef")
