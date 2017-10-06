@@ -24,5 +24,4 @@ class VideoAdapter(private val viewModel: VideoListViewModel) : RecyclerView.Ada
 
     override fun getItemCount(): Int = viewModel.getListSize()
 
-
 }
