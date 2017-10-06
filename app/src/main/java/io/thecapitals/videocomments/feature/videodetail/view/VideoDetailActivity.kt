@@ -118,6 +118,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
     private fun makeControlDispatcher(): PlaybackControlView.ControlDispatcher {
         return object : PlaybackControlView.ControlDispatcher {
             override fun dispatchSetPlayWhenReady(player: Player, playWhenReady: Boolean): Boolean {
+                player.playWhenReady = playWhenReady
                 return playWhenReady
             }
 
@@ -131,7 +132,8 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
             }
 
             override fun dispatchSetRepeatMode(player: Player, repeatMode: Int): Boolean {
-                return false
+                player.repeatMode = repeatMode
+                return true
             }
         }
     }
