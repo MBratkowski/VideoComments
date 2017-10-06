@@ -38,7 +38,7 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
         binding.player.player = createPlayer()
         binding.addComment.setOnClickListener({
             NewCommentActivity.start(
-                    this, "Some title",
+                    this, "dummyVideoId", "Some title",
                     binding.player.player.currentPosition)
         })
 
