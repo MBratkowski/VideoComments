@@ -8,6 +8,7 @@ import java.util.*
 data class CommentModel constructor(
         val videoRef: String,
         val userRef: String,
+        val userName: String,
         val message: String,
         val anchor: Long,
         val timeCreated: Date
@@ -17,6 +18,7 @@ data class CommentModel constructor(
     init {
         data.put("videoRef", videoRef)
         data.put("userRef", userRef)
+        data.put("userName", userName)
         data.put("message", message)
         data.put("anchor", anchor)
         data.put("timeCreated", timeCreated)

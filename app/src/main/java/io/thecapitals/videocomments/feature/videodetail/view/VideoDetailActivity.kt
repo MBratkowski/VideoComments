@@ -36,16 +36,17 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.player.player = createPlayer()
+        val videoRef = "13Tpa3ocL1Q74OAh3nhI"
         binding.addComment.setOnClickListener({
             NewCommentActivity.start(
-                    this, "dummyVideoId", "Some title",
+                    this, videoRef, "Some title",
                     binding.player.player.currentPosition)
         })
 
         if (savedInstanceState == null) {
             supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.video_comments_container, CommentsListFragment())
+                    .replace(R.id.video_comments_container, CommentsListFragment.newInstance(videoRef))
                     .commit()
         }
     }

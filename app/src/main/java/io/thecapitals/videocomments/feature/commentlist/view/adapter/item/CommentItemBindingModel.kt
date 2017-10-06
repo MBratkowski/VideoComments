@@ -2,6 +2,7 @@ package io.thecapitals.videocomments.feature.commentlist.view.adapter.item
 
 
 import android.text.format.DateUtils
+import io.thecapitals.videocomments.data.model.CommentModel
 import io.thecapitals.videocomments.feature.commentlist.view.adapter.collection.CommentViewItemData
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,12 +18,12 @@ class CommentItemBindingModel private constructor(
     class Factory {
         private val creationFormat: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
-        fun build(message: CommentViewItemData): CommentItemBindingModel {
+        fun build(message: CommentModel): CommentItemBindingModel {
 
             return CommentItemBindingModel(
-                    message.user.userName,
-                    DateUtils.formatElapsedTime(message.comment.anchor / 1000),
-                    creationFormat.format(message.comment.timeCreated), message.comment.message, "")
+                    message.userName,
+                    DateUtils.formatElapsedTime(message.anchor / 1000),
+                    creationFormat.format(message.timeCreated), message.message, "")
 
         }
     }
