@@ -50,20 +50,49 @@ class NewCommentActivity : BaseActivity<ActivityNewCommentBinding, NewCommentVie
         super.onCreate(savedInstanceState)
         val userRef = UUID.randomUUID().toString()
         val anchor = intent.getLongExtra(ARG_CURRENT_POS, 0L)
+
+
         binding.buttonSend.setOnClickListener({
-            val userName = binding.userNameEditText.text.toString()
-            viewModel.execute(
-                    UserModel(userRef, userName),
-                    CommentModel(
-                            intent.getStringExtra(ARG_VIDEO_REF),
-                            userRef, userName,
-                            binding.messageEditText.text.toString(),
-                            anchor,
-                            Calendar.getInstance().time
-                    ))
-            finish()
+            handleErrors(userRef, anchor)
+
+
         })
         title = intent.getStringExtra(ARG_TITLE)
         binding.newCommentHeader.text = "Add a new comment at $anchor!"
     }
+
+    private fun handleErrors(userRef: String, anchor: Long) {
+        val userName = binding.userNameEditText.text.toString()
+        val message = binding.messageEditText.text.toString()
+
+
+        if (userName.isEmpty() && message.isEmpty()) {
+            binding.userNameEditText.error = "need a user"
+            binding.messageEditText.error = "need a message"
+            return
+        }
+        if (userName.isEmpty()) {
+            binding.userNameEditText.error = "need a user"
+            return
+        }
+
+        if (message.isEmpty()) {
+            binding.messageEditText.error = "need a message"
+            return
+        }
+
+        viewModel.execute(
+                UserModel(userRef, userName),
+                CommentModel
+                (
+                        intent.getStringExtra(ARG_VIDEO_REF),
+                        userRef, userName,
+                        message,
+                        anchor,
+                        Calendar.getInstance().time
+                ))
+        finish()
+
+    }
+
 }
