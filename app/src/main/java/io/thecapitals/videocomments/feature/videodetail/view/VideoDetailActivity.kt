@@ -97,15 +97,18 @@ class VideoDetailActivity : BaseActivity<ActivityVideoDetailBinding, NewCommentV
     }
 
     override fun onCommentsLoaded(positions: List<Long>) {
-        val destination = ArrayList<Int>()
-        val duration = binding.player.player.duration
-        if (duration > 0) {
-            positions.mapTo(destination) {
-                ((it * 100) / duration).toInt()
+        binding.player.postDelayed({
+            //hate me all you want. I will still hate exoplayer interfaces more :p
+            val destination = ArrayList<Int>()
+            val duration = binding.player.player.duration
+            if (duration > 0) {
+                positions.mapTo(destination) {
+                    ((it * 100) / duration).toInt()
+                }
+                binding.player.findViewById<SeekbarCommentIndicators>(R.id.seekbar_comment_indicators)
+                        ?.setDots(destination)
             }
-            binding.player.findViewById<SeekbarCommentIndicators>(R.id.seekbar_comment_indicators)
-                    ?.setDots(destination)
-        }
+        }, 500)
     }
 
     fun createPlayer(): SimpleExoPlayer? {
